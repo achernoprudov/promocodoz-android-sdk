@@ -1,4 +1,6 @@
-package com.promocodoz.sdk;
+package com.promocodoz.sdk.utils;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author achernoprudov
@@ -10,6 +12,8 @@ public class Config {
 
         private String mAccountSid = null;
         private String mSecretToken = null;
+        private long mTimeout;
+        private TimeUnit mTimeUnit;
 
         public Builder() {
         }
@@ -24,8 +28,24 @@ public class Config {
             return this;
         }
 
+        public long getTimeout() {
+            return mTimeout;
+        }
+
+        public void setTimeout(long timeout) {
+            mTimeout = timeout;
+        }
+
+        public TimeUnit getTimeUnit() {
+            return mTimeUnit;
+        }
+
+        public void setTimeUnit(TimeUnit timeUnit) {
+            mTimeUnit = timeUnit;
+        }
+
         public Config build() {
-            return new Config(mAccountSid, mSecretToken);
+            return new Config(mAccountSid, mSecretToken, mTimeout, mTimeUnit);
         }
 
         public String getAccountSid() {
@@ -42,10 +62,14 @@ public class Config {
     private final String mAccountSid;
     private final String mSecretToken;
     private final String mPlatform = DEFAULT_PLATFORM;
+    private final long mTimeout;
+    private final TimeUnit mTimeUnit;
 
-    private Config(String accountSid, String secretToken) {
+    private Config(String accountSid, String secretToken, long timeout, TimeUnit unit) {
         mAccountSid = accountSid;
         mSecretToken = secretToken;
+        mTimeout = timeout;
+        mTimeUnit = unit;
     }
 
     public String getAccountSid() {
@@ -55,4 +79,17 @@ public class Config {
     public String getSecretToken() {
         return mSecretToken;
     }
+
+    public String getPlatform() {
+        return mPlatform;
+    }
+
+    public long getTimeout() {
+        return mTimeout;
+    }
+
+    public TimeUnit getTimeUnit() {
+        return mTimeUnit;
+    }
 }
+

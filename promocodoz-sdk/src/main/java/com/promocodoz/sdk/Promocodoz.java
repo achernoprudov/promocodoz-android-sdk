@@ -1,5 +1,9 @@
 package com.promocodoz.sdk;
 
+import com.promocodoz.sdk.task.AsyncTaskResult;
+import com.promocodoz.sdk.task.ReservePromocodeTask;
+import com.promocodoz.sdk.utils.Config;
+
 /**
  * @author achernoprudov
  * @since 18/01/2017.
@@ -25,5 +29,16 @@ public final class Promocodoz {
 
     public Config getConfig() {
         return mConfig;
+    }
+
+
+    public String reservePromocode(String promocode) throws Exception {
+        ReservePromocodeTask task = new ReservePromocodeTask(mConfig, promocode);
+        task.execute();
+        AsyncTaskResult<String> result = task.get(mConfig.getTimeout(), mConfig.getTimeUnit());
+        if (result.getError() != null) {
+            throw result.getError();
+        }
+        return result.getResult();
     }
 }
