@@ -3,6 +3,7 @@ package com.promocodoz.sdk.task;
 import com.promocodoz.sdk.utils.Constants;
 import com.promocodoz.sdk.utils.Config;
 import com.promocodoz.sdk.utils.Parser;
+import com.promocodoz.sdk.utils.PromocodozException;
 
 import org.json.JSONObject;
 
@@ -44,7 +45,7 @@ public class ReservePromocodeTask extends AsyncTask<Void, Void, AsyncTaskResult<
             bodyJson.put(Constants.Json.CODE_KEY, mPromocode);
             bodyJson.put(Constants.Json.PLATFORM_KEY, mConfig.getPlatform());
 
-            // создаем GET соединение
+            // создаем POST соединение
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestProperty(Constants.Header.CONTENT_TYPE_KEY, Constants.Header.CONTENT_TYPE_VALUE);
             urlConnection.setRequestMethod(Constants.POST_METHOD);
@@ -58,8 +59,6 @@ public class ReservePromocodeTask extends AsyncTask<Void, Void, AsyncTaskResult<
             writer.close();
             outputStream.close();
 
-//            urlConnection.connect();
-
             if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 // преобразовывем поток в строку с помощью StringBuilder и BufferedReader
                 InputStream inputStream = urlConnection.getInputStream();
@@ -68,7 +67,11 @@ public class ReservePromocodeTask extends AsyncTask<Void, Void, AsyncTaskResult<
                 return new AsyncTaskResult<>(resultString);
             } else {
                 Log.d(TAG, "Status is not OK: " + urlConnection.getResponseCode());
-                return new AsyncTaskResult<>("");
+                InputStream inputStream = urlConnection.getErrorStream();
+                String errorJson = Parser.readJsonFromInputStream(inputStream);
+                String message = Parser.readErrorMessage(errorJson);
+                PromocodozException exception = new PromocodozException(message);
+                return new AsyncTaskResult<>(exception);
             }
         } catch (final Exception throwable) {
             Log.e(TAG, "Error while fetching data", throwable);

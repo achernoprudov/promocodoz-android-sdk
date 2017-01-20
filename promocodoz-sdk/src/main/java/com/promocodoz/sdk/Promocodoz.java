@@ -32,7 +32,7 @@ public final class Promocodoz {
     }
 
 
-    public String reservePromocode(String promocode) throws Exception {
+    public String reservePromocode(String promocode) throws Throwable {
         ReservePromocodeTask task = new ReservePromocodeTask(mConfig, promocode);
         task.execute();
         AsyncTaskResult<String> result = task.get(mConfig.getTimeout(), mConfig.getTimeUnit());

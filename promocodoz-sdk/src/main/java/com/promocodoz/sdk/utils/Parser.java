@@ -1,5 +1,8 @@
 package com.promocodoz.sdk.utils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.support.annotation.NonNull;
 
 import java.io.BufferedReader;
@@ -29,5 +32,10 @@ public class Parser {
         }
 
         return buffer.toString();
+    }
+
+    public static String readErrorMessage(String errorJson) throws JSONException {
+        JSONObject errorObject = new JSONObject(errorJson);
+        return errorObject.getString(Constants.Json.MESSAGE);
     }
 }

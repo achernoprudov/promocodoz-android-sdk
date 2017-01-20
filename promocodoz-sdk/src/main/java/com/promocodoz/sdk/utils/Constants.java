@@ -21,5 +21,6 @@ public interface Constants {
         String SECRET_KEY = "secret";
         String CODE_KEY = "code";
         String PLATFORM_KEY = "platform";
+        String MESSAGE = "Message";
     }
 }

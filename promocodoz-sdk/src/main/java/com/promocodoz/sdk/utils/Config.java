@@ -10,10 +10,10 @@ public class Config {
 
     public static class Builder {
 
-        private String mAccountSid = null;
-        private String mSecretToken = null;
-        private long mTimeout;
-        private TimeUnit mTimeUnit;
+        private String mAccountSid = "default";
+        private String mSecretToken = "default";
+        private long mTimeout = 30;
+        private TimeUnit mTimeUnit = TimeUnit.SECONDS;
 
         public Builder() {
         }

@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
         try {
             String result = Promocodoz.getInstance().reservePromocode(promocode);
             mResultText.setText(getDefault(result, "<<empty>>"));
-        } catch (Exception e) {
-            mResultText.setText(getDefault(e.getMessage(), e.toString()));
+        } catch (Throwable throwable) {
+            mResultText.setText(getDefault(throwable.getMessage(), throwable.toString()));
         }
     }
 
