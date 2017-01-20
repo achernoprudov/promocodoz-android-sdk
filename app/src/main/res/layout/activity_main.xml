@@ -11,7 +11,27 @@
     tools:context="com.promocodoz.promocodozandroidapp.MainActivity">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/result"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:gravity="center"
+        android:hint="@string/result"
+        android:lines="3"
+        android:textAlignment="center" />
+
+    <EditText
+        android:id="@+id/promocode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/result"
+        android:hint="@string/promocode"
+        android:paddingTop="60dp" />
+
+    <Button
+        android:id="@+id/send_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/promocode"
+        android:text="@string/send_code" />
+
 </RelativeLayout>
